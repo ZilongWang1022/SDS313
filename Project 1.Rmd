@@ -1,0 +1,85 @@
+---
+title: "Project 1"
+author: "Zilong Wang"
+date: "2023-09-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo=FALSE}
+dataset = read.csv("Project1_videogames.csv")
+```
+
+**The dataset that I'm using involves different video games and their publishers. Additionally, it also includes genre,ratings,sales,playtime,average hours to finish (The time players reported completing everything in the game) and review score of each video game. The author of this dataset is Dr.Joe Cox and the data was collected from data on "How Long to Beat". My chosen outcome is the review score of each video game and the predictors are the maximum players, average hours to complete the game and sales of each video game.**
+
+Graph related to my analysis:
+
+![](1.png)
+
+
+##### **Here is the distribution of my outcome variable, review scores of each video game**
+```{r echo=FALSE}
+library(ggplot2)
+ggplot(dataset,aes(x = ReviewScore)) + geom_histogram(col="black",fill="blue",binwidth = 5)+labs(title = "Review Scores of different games",x = "Review Scores") + theme_classic()
+```
+```{r include=FALSE}
+mean(dataset$ReviewScore)
+median(dataset$ReviewScore)
+min(dataset$ReviewScore)
+max(dataset$ReviewScore)
+```
+*The distribution of review scores shows that the majority of video games has review scores from 50 to 85 and around 170 games have 70 review score. The mean of all review scores is around 70 and the median is 71.The lowest review score is 20 and the highest is 98.*
+
+
+##### **Investigating the relationship between the review scores of games and the number of maximum players.**
+
+```{r echo=FALSE}
+library(ggplot2)
+ggplot(dataset,aes(x=MaxPlayers,y=ReviewScore)) + geom_point() + labs(title = "The relationship between the number of maximum players and the review scores", x = "Maximum players", y = "Review Scores")
+```
+
+```{r include=FALSE}
+cor(dataset$MaxPlayers,dataset$ReviewScore)
+```
+*The correlation between the review scores of games and the number of maximum players is `r round(cor(dataset$MaxPlayers,dataset$ReviewScore),2)`,which means that there is a weak positive correlation. As the number of maximum players increases, the review score of the game is not likely to increase.*
+
+
+
+
+
+##### **Relationship between the average hours to complete the game and the review scores.** 
+```{r echo=FALSE}
+library(ggplot2)
+ggplot(dataset,aes(x=AvgHoursToFinish,y=ReviewScore)) + geom_point() + labs(title = "The relationship between the the average hours to complete the game and the review scores",x = "Average hours to finish a game",y = "Review scores")
+```
+
+```{r include=FALSE}
+cor(dataset$AvgHoursToFinish,dataset$ReviewScore)
+```
+
+*The correlation between the average hours to complete the game and the review scores is `r round(cor(dataset$AvgHoursToFinish,dataset$ReviewScore),2)`.It means that compared with the predictor,maximum players,the average hours to finish a game is more likely to be correlated with review scores. When the average hours increases, the review score of the game is going to increase but not too much.*
+
+##### **The last predictor is sales of the game. Relationship between sales of a game and review score of that game.**
+
+```{r echo=FALSE}
+library(ggplot2)
+ggplot(dataset,aes(x=Sales,y=ReviewScore)) + geom_point() + labs(title = "The relationship between sales of a game and review score of that game",x = "Sale of many games",y = "Review scores of many games")
+```
+
+```{r include=FALSE}
+cor(dataset$Sales,dataset$ReviewScore)
+```
+
+*The correlation between sales of many games and review score of many games is `r round(cor(dataset$Sales,dataset$ReviewScore),2)`.The correlation coefficient is slightly higher than that for the average hours to finish and review score, which means that within the three predictors, sale of the game is most likely to be correlated with review score of the game.*
+
+
+##### **Summary**
+According to the calculations we did and within the three predictors, sale of the game is most likely to be correlated with review score of the game. It means that when statistics are going to make predictions on the review score of a game, they should look at the sales of it. The maximum players for a game is not likely to influence the review scores and the average hours to finish a game is more likely to impact it. However, this research is incapable to make a solid conclusion because only three predictors are included. In the future, researchers and statistics could look at the sales of a game and how much values it produced in the business market.
+
+
+
+
+*Picture from: Pickell, Devin. “The 13 Most Prominent Video Game Publishers in the World.” Learn.g2.com, learn.g2.com/video-game-publishers.*
